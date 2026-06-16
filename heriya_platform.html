@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#E8A8B8;--pink-light:#FBF0F3;--pink-mid:#D4899F;--rose:#C07090;--rose-dk:#9A526A;
+  --ivory:#FBF8F4;--beige:#EDE4D8;--text:#2C1F24;--soft:#8A6872;--muted:#B89AA4;
+  --border:rgba(200,160,175,0.25);--shadow:0 2px 20px rgba(180,100,130,0.1);
+  --shadow-h:0 8px 32px rgba(180,100,130,0.2);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--text);overflow-x:hidden;font-size:14px}
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--rose-dk);cursor:pointer;letter-spacing:0.06em;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--pink)}
+.search-wrap{flex:1;max-width:400px;position:relative}
+.search-wrap input{width:100%;padding:9px 16px 9px 38px;border-radius:999px;border:1.5px solid var(--border);background:var(--pink-light);font-size:13px;color:var(--text);outline:none;font-family:'DM Sans',sans-serif}
+.search-wrap input:focus{border-color:var(--pink-mid);background:#fff}
+.search-wrap input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+.icon-btn{width:36px;height:36px;border-radius:50%;border:none;background:transparent;font-size:17px;display:flex;align-items:center;justify-content:center;color:var(--soft);position:relative;transition:.2s}
+.icon-btn:hover{background:var(--pink-light)}
+.badge{position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:var(--rose);color:#fff;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.nav-ava{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;cursor:pointer;border:2px solid var(--pink)}
+.btn-create{display:flex;align-items:center;gap:5px;padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,var(--rose),var(--rose-dk));color:#fff;border:none;font-size:13px;font-weight:500;transition:.2s;white-space:nowrap}
+.btn-create:hover{opacity:.9;transform:translateY(-1px)}
+
+/* CAT BAR */
+.catbar{background:#fff;border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none}
+.catbar::-webkit-scrollbar{display:none}
+.catbtn{padding:13px 16px;border:none;background:none;font-size:12.5px;font-weight:500;color:var(--soft);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s}
+.catbtn:hover,.catbtn.on{color:var(--rose-dk);border-bottom-color:var(--rose)}
+
+/* PAGES */
+.pg{display:none}.pg.on{display:block}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#FDF0F3,#FBF5EE 50%,#F5EEF8);padding:3.5rem 2rem 2.5rem;text-align:center;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(232,168,184,.3),transparent 70%)}
+.hero-tag{display:inline-block;padding:5px 14px;border-radius:999px;background:var(--pink-light);color:var(--rose);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:400;line-height:1.15;margin-bottom:.75rem}
+.hero h1 em{color:var(--rose);font-style:italic}
+.hero p{font-size:15px;color:var(--soft);max-width:480px;margin:0 auto 1.75rem;line-height:1.7}
+.hero-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.btn-p{padding:12px 26px;border-radius:999px;background:linear-gradient(135deg,var(--rose),var(--rose-dk));color:#fff;border:none;font-size:14px;font-weight:500;cursor:pointer;transition:.2s}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(154,82,106,.35)}
+.btn-o{padding:12px 26px;border-radius:999px;background:#fff;color:var(--rose-dk);border:1.5px solid var(--pink);font-size:14px;font-weight:500;cursor:pointer;transition:.2s}
+.btn-o:hover{background:var(--pink-light)}
+.stats{display:flex;justify-content:center;gap:2.5rem;margin-top:2.5rem;flex-wrap:wrap}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:var(--rose-dk)}
+.stat-l{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* SECTION */
+.sec{padding:2rem 1.5rem}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.25rem}
+.sec-title{font-size:1.6rem;font-weight:500}.sec-title span{color:var(--rose);font-style:italic}
+.see-all{font-size:12px;color:var(--rose);font-weight:500;cursor:pointer;background:none;border:none}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 1.5rem}
+
+/* TOPICS */
+.topics{display:flex;gap:.6rem;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.topics::-webkit-scrollbar{display:none}
+.chip{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--border);background:#fff;cursor:pointer;flex-shrink:0;font-size:12px;transition:.15s}
+.chip:hover,.chip.hot{background:var(--pink-light);border-color:var(--pink)}
+.chip-n{font-weight:500;color:var(--text)}.chip-c{color:var(--muted)}
+
+/* INSPO BANNER */
+.inspo{margin:0 1.5rem 1.5rem;background:linear-gradient(135deg,#F9D6E0,#F0E8F6 50%,#EDE4D8);border-radius:20px;padding:2rem 2.5rem;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+.inspo-label{font-size:10px;color:var(--rose);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.inspo-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.75rem);color:var(--text);line-height:1.45;margin-bottom:.6rem}
+.inspo-by{font-size:12px;color:var(--soft)}
+
+/* MASONRY */
+.mason{columns:4;column-gap:.9rem;padding:0 1.5rem 1.5rem}
+@media(max-width:1100px){.mason{columns:3}}
+@media(max-width:750px){.mason{columns:2}}
+@media(max-width:480px){.mason{columns:1}}
+.card{break-inside:avoid;background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:.9rem;cursor:pointer;transition:.22s;overflow:hidden}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.card-img{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FBF0F3,#F5EEE8)}
+.card-body{padding:.875rem}
+.card-cat{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--pink-light);color:var(--rose);margin-bottom:7px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;line-height:1.35;color:var(--text);margin-bottom:5px}
+.card-desc{font-size:12px;color:var(--soft);line-height:1.5;margin-bottom:9px}
+.card-author{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.mini-ava{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.card-acts{display:flex;align-items:center;border-top:1px solid var(--border);padding-top:8px;gap:2px}
+.act{display:flex;align-items:center;gap:3px;padding:4px 7px;border:none;background:none;font-size:11px;color:var(--muted);cursor:pointer;border-radius:7px;transition:.15s}
+.act:hover{background:var(--pink-light);color:var(--rose)}
+.act.liked{color:var(--rose)}
+.vc{margin-left:auto;font-size:10px;color:var(--muted)}
+
+/* CREATORS */
+.cr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.875rem}
+.cr-card{background:#fff;border-radius:14px;padding:1.1rem .875rem;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:.22s}
+.cr-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+.cr-ava{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;margin:0 auto .6rem;border:3px solid var(--pink-light)}
+.cr-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.cr-handle{font-size:10px;color:var(--muted);margin-bottom:4px}
+.cr-niche{font-size:10px;color:var(--rose);font-weight:600;margin-bottom:6px}
+.cr-fol{font-size:11px;color:var(--soft);margin-bottom:8px}
+.btn-fol{padding:5px 0;border-radius:999px;border:1.5px solid var(--pink);background:#fff;color:var(--rose-dk);font-size:11px;font-weight:500;cursor:pointer;width:100%;transition:.2s}
+.btn-fol:hover,.btn-fol.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+/* DISCUSSIONS */
+.disc-list{display:flex;flex-direction:column;gap:.875rem}
+.disc{background:#fff;border-radius:14px;padding:1.1rem 1.25rem;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:.2s;display:flex;gap:.875rem;align-items:flex-start}
+.disc:hover{transform:translateX(3px);border-color:var(--pink)}
+.disc-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--pink-light);flex-shrink:0}
+.disc-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:3px}
+.disc-prev{font-size:12px;color:var(--soft);line-height:1.5;margin-bottom:6px}
+.disc-meta{display:flex;gap:.875rem;font-size:11px;color:var(--muted)}
+
+/* ARTICLES */
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.art-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:.22s}
+.art-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.art-img{height:150px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:linear-gradient(135deg,#FBF0F3,#F5EEE8)}
+.art-body{padding:1.1rem}
+.art-tag{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--rose);margin-bottom:7px}
+.art-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:5px}
+.art-desc{font-size:12px;color:var(--soft);line-height:1.5;margin-bottom:9px}
+.art-meta{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+
+/* VIDEOS */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.875rem}
+.vid-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:.22s}
+.vid-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.vid-thumb{height:140px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:linear-gradient(135deg,#FBF0F3,#F0EAF5);position:relative}
+.play{position:absolute;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--rose-dk)}
+.dur{position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,.65);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px}
+.vid-body{padding:.875rem}
+.vid-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4}
+.vid-meta{font-size:11px;color:var(--muted)}
+
+/* SPOTLIGHT */
+.spot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.875rem}
+.spot-card{background:linear-gradient(135deg,#FDF0F3,#FBF5EE);border-radius:18px;padding:1.25rem;border:1px solid var(--border);cursor:pointer;transition:.22s;display:flex;flex-direction:column;gap:.6rem}
+.spot-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+.spot-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text);line-height:1.6}
+.spot-auth{display:flex;align-items:center;gap:9px;margin-top:auto}
+.spot-ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.spot-name{font-size:12px;font-weight:600;color:var(--text)}
+.spot-role{font-size:10px;color:var(--muted)}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.875rem;padding:0 1.5rem 1.5rem}
+.cat-box{border-radius:18px;padding:1.75rem 1.25rem;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:.22s;border:1px solid var(--border);box-shadow:var(--shadow)}
+.cat-box:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.cat-ico{font-size:1.8rem}
+.cat-nm{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)}
+.cat-ct{font-size:11px;color:var(--muted)}
+
+/* PROFILE */
+.prof-banner{height:180px;background:linear-gradient(135deg,#F9D6E0,#EDE4D8 60%,#E8D8E8)}
+.prof-info{padding:0 1.5rem 1.5rem;background:#fff}
+.prof-ava{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;border:4px solid #fff;margin-top:-40px}
+.prof-top{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:.875rem;padding-top:.6rem}
+.prof-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--text)}
+.prof-handle{font-size:13px;color:var(--muted)}
+.prof-bio{font-size:13px;color:var(--soft);margin:.6rem 0;line-height:1.6;max-width:440px}
+.prof-stats{display:flex;gap:1.75rem;flex-wrap:wrap}
+.ps-n{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text)}
+.ps-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prof-tabs{display:flex;border-bottom:1px solid var(--border);background:#fff;overflow-x:auto;scrollbar-width:none}
+.prof-tabs::-webkit-scrollbar{display:none}
+.ptab{padding:12px 18px;font-size:12.5px;font-weight:500;color:var(--soft);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;border-top:none;border-left:none;border-right:none;background:none;transition:.15s;font-family:'DM Sans',sans-serif}
+.ptab.on,.ptab:hover{color:var(--rose-dk);border-bottom-color:var(--rose)}
+.back-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:#fff;border-radius:999px;border:1px solid var(--border);color:var(--soft);font-size:12px;cursor:pointer;margin:1rem 1.5rem;font-family:'DM Sans',sans-serif;transition:.15s}
+.back-btn:hover{background:var(--pink-light);color:var(--rose-dk)}
+
+/* SAVED */
+.saved-cols{display:grid;grid-template-columns:240px 1fr;gap:1.25rem;padding:1.5rem;align-items:start}
+@media(max-width:700px){.saved-cols{grid-template-columns:1fr}}
+.coll-list{display:flex;flex-direction:column;gap:.6rem}
+.coll-it{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-radius:11px;border:1px solid var(--border);cursor:pointer;transition:.15s}
+.coll-it:hover,.coll-it.on{background:var(--pink-light);border-color:var(--pink)}
+.coll-ico{width:36px;height:36px;border-radius:9px;background:var(--pink-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.coll-nm{font-size:13px;font-weight:500;color:var(--text)}
+.coll-ct{font-size:11px;color:var(--muted)}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(44,31,36,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:1rem}
+.overlay.hide{display:none}
+.modal{background:#fff;border-radius:22px;width:100%;max-width:600px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(44,31,36,.2)}
+.modal-head{padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-ttl{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text)}
+.modal-x{background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;line-height:1;padding:3px}
+.modal-x:hover{color:var(--text)}
+.modal-body{padding:1.75rem}
+.m-img{border-radius:14px;background:var(--pink-light);display:flex;align-items:center;justify-content:center;font-size:5rem;min-height:160px;margin-bottom:1.25rem}
+.m-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--text);margin-bottom:.6rem}
+.m-desc{font-size:14px;color:var(--soft);line-height:1.7;margin-bottom:1.25rem}
+.m-acts{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.m-act{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:500;color:var(--soft);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.m-act:hover,.m-act.on{background:var(--pink-light);border-color:var(--pink);color:var(--rose-dk)}
+.cm-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:.875rem}
+.cm-row{display:flex;gap:9px;margin-bottom:.875rem}
+.cm-ava{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.cm-nm{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.cm-txt{font-size:12px;color:var(--soft);line-height:1.5}
+.cm-in-row{display:flex;gap:8px;align-items:flex-start;margin-top:.875rem}
+.cm-in{flex:1;padding:9px 14px;border-radius:18px;border:1.5px solid var(--border);background:var(--pink-light);font-size:12px;font-family:'DM Sans',sans-serif;resize:none;outline:none;color:var(--text)}
+.cm-in:focus{border-color:var(--pink-mid);background:#fff}
+.btn-send{padding:9px 16px;border-radius:999px;background:var(--rose);color:#fff;border:none;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* CREATE MODAL */
+.cr-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.cr-tab{padding:7px 14px;border-radius:999px;font-size:12px;font-weight:500;border:1.5px solid var(--border);background:#fff;color:var(--soft);cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif}
+.cr-tab.on{background:var(--pink-light);border-color:var(--pink);color:var(--rose-dk)}
+.field{margin-bottom:.875rem}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--soft);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase}
+.finput{width:100%;padding:11px 14px;border-radius:11px;border:1.5px solid var(--border);background:var(--pink-light);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none}
+.finput:focus{border-color:var(--pink-mid);background:#fff}
+.fta{min-height:110px;resize:vertical}
+.upload-z{width:100%;padding:1.75rem;border-radius:11px;border:2px dashed var(--border);background:var(--pink-light);text-align:center;color:var(--muted);cursor:pointer;font-size:13px;margin-bottom:.875rem;transition:.2s}
+.upload-z:hover{border-color:var(--pink-mid);background:#fff}
+.cr-foot{display:flex;justify-content:flex-end;gap:.6rem;padding-top:.875rem;border-top:1px solid var(--border);margin-top:.875rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.75rem;right:1.75rem;z-index:200;background:#fff;border-radius:14px;padding:.875rem 1.25rem;box-shadow:0 6px 28px rgba(44,31,36,.14);border:1px solid var(--border);display:flex;align-items:center;gap:10px;transform:translateY(80px);opacity:0;transition:.3s;pointer-events:none;max-width:300px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-txt{font-size:13px;color:var(--text);font-weight:500}
+
+/* AVATAR COLORS */
+.av1{background:linear-gradient(135deg,#E8A0B0,#C9849A)}
+.av2{background:linear-gradient(135deg,#C0A8D8,#A08AC0)}
+.av3{background:linear-gradient(135deg,#B0C8A8,#8CAA84)}
+.av4{background:linear-gradient(135deg,#C4A8C0,#A88AAA)}
+.av5{background:linear-gradient(135deg,#E8B898,#D49A78)}
+.av6{background:linear-gradient(135deg,#8FC4B8,#6AA898)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo" id="logoBtn"><span class="logo-dot"></span>HERIYA</div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input id="searchInput" type="text" placeholder="Discover inspiration, creators, topics…">
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn" id="notifBtn">🔔<span class="badge">3</span></button>
+    <button class="icon-btn" id="msgBtn">💬</button>
+    <button class="icon-btn" id="savedNavBtn">🔖</button>
+    <div class="nav-ava av1" id="myAvaBtn">L</div>
+    <button class="btn-create" id="createBtn">✦ Create</button>
+  </div>
+</nav>
+
+<!-- CATEGORY BAR -->
+<div class="catbar" id="catbar">
+  <button class="catbtn on" data-pg="home">✨ For You</button>
+  <button class="catbtn" data-cat="Beauty">💄 Beauty</button>
+  <button class="catbtn" data-cat="Fashion">👗 Fashion</button>
+  <button class="catbtn" data-cat="Modest Fashion">🌸 Modest Fashion</button>
+  <button class="catbtn" data-cat="Wellness">🌿 Wellness</button>
+  <button class="catbtn" data-cat="Study Tips">📚 Study Tips</button>
+  <button class="catbtn" data-cat="Productivity">⚡ Productivity</button>
+  <button class="catbtn" data-cat="Lifestyle">🌷 Lifestyle</button>
+  <button class="catbtn" data-cat="Careers">💼 Careers</button>
+  <button class="catbtn" data-cat="Self-Care">🛁 Self-Care</button>
+  <button class="catbtn" data-cat="Personal Growth">🌱 Personal Growth</button>
+  <button class="catbtn" data-pg="videos">🎬 Videos</button>
+  <button class="catbtn" data-pg="articles">📰 Articles</button>
+  <button class="catbtn" data-pg="categories">⊞ All</button>
+</div>
+
+<!-- HOME -->
+<div id="pg-home" class="pg on">
+  <div class="hero">
+    <div class="hero-tag">✦ Welcome to Your Space</div>
+    <h1>Where Women <em>Inspire</em><br>&amp; Rise Together</h1>
+    <p>HERIYA is your safe, beautiful corner of the internet — discover, create, learn, and connect with a community of women who lift each other up.</p>
+    <div class="hero-btns">
+      <button class="btn-p" id="exploreBtn">Explore HERIYA</button>
+      <button class="btn-o" id="shareBtn">Share Your Story</button>
+    </div>
+    <div class="stats">
+      <div><div class="stat-n">128K</div><div class="stat-l">Members</div></div>
+      <div><div class="stat-n">42K</div><div class="stat-l">Posts</div></div>
+      <div><div class="stat-n">890</div><div class="stat-l">Creators</div></div>
+      <div><div class="stat-n">16</div><div class="stat-l">Categories</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><h2 class="sec-title">Trending <span>Right Now</span></h2></div>
+    <div class="topics" id="topicsEl"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec">
+    <div class="sec-head"><h2 class="sec-title">Daily <span>Inspiration</span></h2></div>
+    <div class="inspo">
+      <div style="flex:1;min-width:180px">
+        <div class="inspo-label">✦ Quote of the Day</div>
+        <div class="inspo-q">"She believed she could, so she did — and then she helped the woman next to her believe it too."</div>
+        <div class="inspo-by">— The HERIYA Community</div>
+      </div>
+      <div style="font-size:3.5rem;flex-shrink:0">🌸</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Featured <span>Creators</span></h2>
+      <button class="see-all" id="allCreatorsBtn">See all →</button>
+    </div>
+    <div class="cr-grid" id="creatorsEl"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec">
+    <div class="sec-head"><h2 class="sec-title">Discover <span>&amp; Explore</span></h2></div>
+  </div>
+  <div class="mason" id="mainFeed"></div>
+
+  <div class="sec">
+    <div class="sec-head"><h2 class="sec-title">Popular <span>Discussions</span></h2></div>
+    <div class="disc-list" id="discEl"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Must-Read <span>Articles</span></h2>
+      <button class="see-all" id="allArticlesBtn">All articles →</button>
+    </div>
+    <div class="art-grid" id="articlesEl"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Inspiring <span>Videos</span></h2>
+      <button class="see-all" id="allVideosBtn">Watch more →</button>
+    </div>
+    <div class="vid-grid" id="videosEl"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="sec">
+    <div class="sec-head"><h2 class="sec-title">Women's <span>Spotlight</span></h2></div>
+    <div class="spot-grid" id="spotEl"></div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div id="pg-categories" class="pg">
+  <div class="sec"><div class="sec-head"><h2 class="sec-title">All <span>Categories</span></h2></div></div>
+  <div class="cat-grid" id="catGridEl"></div>
+</div>
+
+<!-- CAT DETAIL -->
+<div id="pg-catdetail" class="pg">
+  <button class="back-btn" id="catBackBtn">← Back</button>
+  <div class="sec"><div class="sec-head"><h2 class="sec-title" id="catDetailTitle"></h2></div></div>
+  <div class="mason" id="catDetailFeed"></div>
+</div>
+
+<!-- VIDEOS -->
+<div id="pg-videos" class="pg">
+  <div class="sec"><div class="sec-head"><h2 class="sec-title">Watch <span>&amp; Learn</span></h2></div></div>
+  <div class="vid-grid" style="padding:0 1.5rem 1.5rem" id="allVidsEl"></div>
+</div>
+
+<!-- ARTICLES -->
+<div id="pg-articles" class="pg">
+  <div class="sec"><div class="sec-head"><h2 class="sec-title">Read <span>&amp; Discover</span></h2></div></div>
+  <div class="art-grid" style="padding:0 1.5rem 1.5rem" id="allArtsEl"></div>
+</div>
+
+<!-- SAVED -->
+<div id="pg-saved" class="pg">
+  <div class="sec"><div class="sec-head"><h2 class="sec-title">Your <span>Saved</span> Space</h2></div></div>
+  <div class="saved-cols">
+    <div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:.875rem">Collections</div>
+      <div class="coll-list">
+        <div class="coll-it on"><div class="coll-ico">💄</div><div><div class="coll-nm">Beauty Favs</div><div class="coll-ct">34 posts</div></div></div>
+        <div class="coll-it"><div class="coll-ico">📚</div><div><div class="coll-nm">Study Resources</div><div class="coll-ct">22 posts</div></div></div>
+        <div class="coll-it"><div class="coll-ico">🌸</div><div><div class="coll-nm">Modest Looks</div><div class="coll-ct">41 posts</div></div></div>
+        <div class="coll-it"><div class="coll-ico">🌿</div><div><div class="coll-nm">Wellness Inspo</div><div class="coll-ct">18 posts</div></div></div>
+        <div class="coll-it"><div class="coll-ico">💼</div><div><div class="coll-nm">Career Goals</div><div class="coll-ct">15 posts</div></div></div>
+        <div class="coll-it"><div class="coll-ico">✨</div><div><div class="coll-nm">Quotes I Love</div><div class="coll-ct">29 posts</div></div></div>
+      </div>
+      <button class="btn-o" style="width:100%;margin-top:.875rem;font-size:12px" id="newCollBtn">+ New Collection</button>
+    </div>
+    <div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:.875rem">Saved Posts — Beauty Favs</div>
+      <div class="mason" style="padding:0" id="savedFeedEl"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="pg-search" class="pg">
+  <div style="padding:1.5rem 1.5rem 0;border-bottom:1px solid var(--border);background:#fff">
+    <h2 id="searchHead" style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text);padding-bottom:.875rem"></h2>
+  </div>
+  <div class="mason" style="padding-top:1.25rem" id="searchFeedEl"></div>
+</div>
+
+<!-- PROFILE -->
+<div id="pg-profile" class="pg">
+  <button class="back-btn" id="profBackBtn">← Back</button>
+  <div class="prof-banner" id="profBanner"></div>
+  <div class="prof-info">
+    <div id="profAva"></div>
+    <div class="prof-top">
+      <div>
+        <div class="prof-name" id="profName"></div>
+        <div class="prof-handle" id="profHandle"></div>
+        <div class="prof-bio" id="profBio"></div>
+        <div class="prof-stats" id="profStats"></div>
+      </div>
+      <div style="display:flex;gap:.6rem;padding-top:.875rem">
+        <button class="btn-p" id="profFollowBtn">Follow</button>
+        <button class="btn-o" id="profMsgBtn">Message</button>
+      </div>
+    </div>
+  </div>
+  <div class="prof-tabs">
+    <button class="ptab on" data-ptab>Posts</button>
+    <button class="ptab" data-ptab>Articles</button>
+    <button class="ptab" data-ptab>Videos</button>
+    <button class="ptab" data-ptab>Saved</button>
+  </div>
+  <div class="mason" style="margin-top:1.25rem" id="profFeedEl"></div>
+</div>
+
+<!-- POST MODAL -->
+<div class="overlay hide" id="postOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-ttl" id="mCat"></div>
+      <button class="modal-x" id="closePostBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="m-img" id="mImg"></div>
+      <div class="m-title" id="mTitle"></div>
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:.875rem">
+        <div id="mAva" class="cm-ava" style="width:34px;height:34px;font-size:13px"></div>
+        <div><div id="mAuthor" style="font-size:13px;font-weight:600;color:var(--text)"></div><div id="mTime" style="font-size:11px;color:var(--muted)"></div></div>
+      </div>
+      <div class="m-desc" id="mDesc"></div>
+      <div class="m-acts">
+        <button class="m-act" id="modalLikeBtn">❤️ <span id="mLikeCt">0</span> Likes</button>
+        <button class="m-act" id="modalSaveBtn">🔖 Save</button>
+        <button class="m-act" id="modalShareBtn">↗ Share</button>
+        <button class="m-act" id="modalReportBtn">⚑ Report</button>
+      </div>
+      <div class="cm-title" id="cmTitle">Comments</div>
+      <div id="cmList"></div>
+      <div class="cm-in-row">
+        <textarea class="cm-in" id="cmInput" placeholder="Add a kind comment…" rows="1"></textarea>
+        <button class="btn-send" id="cmSendBtn">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div class="overlay hide" id="createOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-ttl">Share Something Beautiful</div>
+      <button class="modal-x" id="closeCreateBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="cr-tabs" id="crTabs">
+        <button class="cr-tab on">📷 Image</button>
+        <button class="cr-tab">✍️ Blog</button>
+        <button class="cr-tab">💬 Discussion</button>
+        <button class="cr-tab">💡 Advice</button>
+        <button class="cr-tab">✨ Quote</button>
+      </div>
+      <div class="upload-z" id="uploadZone">
+        <div style="font-size:2rem;margin-bottom:.4rem">🌸</div>
+        <div style="font-weight:500;color:var(--soft);margin-bottom:3px">Upload Image or Video</div>
+        <div style="font-size:11px">Click to browse</div>
+      </div>
+      <div class="field"><label>Title</label><input class="finput" type="text" placeholder="Give your post a beautiful title…"></div>
+      <div class="field"><label>Description</label><textarea class="finput fta" placeholder="Share your story, tips, or inspiration…"></textarea></div>
+      <div class="field">
+        <label>Category</label>
+        <select class="finput" style="cursor:pointer">
+          <option>Beauty</option><option>Fashion</option><option>Modest Fashion</option>
+          <option>Wellness</option><option>Study Tips</option><option>Productivity</option>
+          <option>Lifestyle</option><option>Careers</option><option>Self-Care</option>
+          <option>Personal Growth</option><option>Relationships</option><option>Travel</option>
+        </select>
+      </div>
+      <div class="field"><label>Tags</label><input class="finput" type="text" placeholder="#glowup, #selfcare…"></div>
+      <div class="cr-foot">
+        <button class="btn-o" id="cancelCreateBtn">Cancel</button>
+        <button class="btn-p" id="publishBtn">✦ Publish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toastIco"></span>
+  <span class="toast-txt" id="toastTxt"></span>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+const USERS = [
+  {id:'layla',name:'Layla Hassan',handle:'@laylabeauty',niche:'Beauty & Skincare',bio:'Skincare obsessive ✨ sharing what works for melanin-rich skin. Mom of 2, beauty lover forever.',followers:'48.2K',following:892,posts:214,av:'av1',init:'L',joined:'Mar 2023'},
+  {id:'sofia',name:'Sofia Reyes',handle:'@sofiastudies',niche:'Study Tips & Productivity',bio:'Law student at Columbia 📚 | Sharing study systems and how to actually enjoy learning.',followers:'32.1K',following:411,posts:178,av:'av2',init:'S',joined:'Jan 2023'},
+  {id:'nour',name:'Nour Al-Rashidi',handle:'@nourwellness',niche:'Wellness & Mindfulness',bio:'Holistic wellness coach 🌿 | Guiding women to find peace in the chaos of daily life.',followers:'61.4K',following:720,posts:305,av:'av3',init:'N',joined:'Sep 2022'},
+  {id:'amara',name:'Amara Okonkwo',handle:'@amarastyle',niche:'Modest Fashion',bio:'Modest fashion creator 🌸 | Proving elegance and coverage can coexist beautifully. London-based.',followers:'89.3K',following:543,posts:421,av:'av4',init:'A',joined:'Jun 2022'},
+  {id:'priya',name:'Priya Sharma',handle:'@priyacareer',niche:'Careers & Women in Business',bio:'Product manager at Google 💼 | Helping women break into tech and negotiate salaries.',followers:'54.7K',following:332,posts:167,av:'av5',init:'P',joined:'Nov 2022'},
+  {id:'zara',name:'Zara Kowalski',handle:'@zarainspo',niche:'Personal Growth & Self-Love',bio:'Therapist-turned-coach 🌱 | Weekly dose of genuine self-compassion and real growth talk.',followers:'41.8K',following:601,posts:289,av:'av6',init:'Z',joined:'Feb 2023'},
+  {id:'fatima',name:'Fatima Al-Mansour',handle:'@fatimalife',niche:'Lifestyle & Cooking',bio:'Chef & lifestyle blogger 🍽️ | Recreating Levantine recipes with a modern twist.',followers:'37.5K',following:480,posts:196,av:'av1',init:'F',joined:'Apr 2023'},
+  {id:'chloe',name:'Chloé Dubois',handle:'@chloetravels',niche:'Travel & Solo Adventures',bio:'Solo female traveler ✈️ | 38 countries, 1 passport, endless stories. Paris-based.',followers:'73.2K',following:290,posts:348,av:'av2',init:'C',joined:'Aug 2022'},
+];
+const POSTS = [
+  {id:1,title:'The 5-Step Glass Skin Routine That Changed My Life',cat:'Beauty',em:'✨',desc:'After months of trial and error, I found the perfect minimalist routine for that glowy, glass-like skin. Here\'s exactly what I do every morning and night.',au:'layla',likes:3420,views:'18.4K',time:'2h ago',h:260},
+  {id:2,title:'How I Went From 2.8 GPA to Dean\'s List Using Cornell Notes',cat:'Study Tips',em:'📚',desc:'It took three semesters to realize my note-taking was destroying my grades. Here\'s the system that turned everything around.',au:'sofia',likes:5810,views:'42.1K',time:'4h ago',h:200},
+  {id:3,title:'7 Morning Habits of Women Who Feel at Peace',cat:'Wellness',em:'🌿',desc:'After studying 50 women who have genuinely calm mornings, I found 7 habits they almost all shared.',au:'nour',likes:7230,views:'61.7K',time:'6h ago',h:230},
+  {id:4,title:'Building a Capsule Wardrobe for the Modest Fashion Girl',cat:'Modest Fashion',em:'🌸',desc:'30 pieces, infinite outfits. Here\'s how to build a wardrobe that\'s both modest and incredibly stylish year-round.',au:'amara',likes:9100,views:'89.5K',time:'8h ago',h:290},
+  {id:5,title:'How I Negotiated a $25K Salary Increase (Template Inside)',cat:'Careers',em:'💼',desc:'I was terrified, my hands were shaking — but I walked out with $25,000 more per year. Here\'s the exact script I used.',au:'priya',likes:11200,views:'104K',time:'10h ago',h:210},
+  {id:6,title:'Stop Waiting to Feel Ready — A Letter to My Younger Self',cat:'Personal Growth',em:'🌱',desc:'Confidence only comes after you start, not before. Everything I wish I knew at 22.',au:'zara',likes:8400,views:'77.2K',time:'1d ago',h:180},
+  {id:7,title:'My Grandma\'s Maqlouba (Secret Ingredients Revealed)',cat:'Lifestyle',em:'🍽️',desc:'Maqlouba means "upside down" — and when you flip this fragrant rice dish, everything is perfect. Grandma\'s two unexpected secrets inside.',au:'fatima',likes:4100,views:'29.8K',time:'1d ago',h:250},
+  {id:8,title:'Solo Travel in Morocco as a Woman: The Real Guide',cat:'Travel',em:'✈️',desc:'Marrakech, Fes, Chefchaouen — 10 days alone. My honest complete guide with the magic AND the real talk.',au:'chloe',likes:6300,views:'55.6K',time:'2d ago',h:290},
+  {id:9,title:'The Self-Care Sunday Routine for Busy Women',cat:'Self-Care',em:'🛁',desc:'You don\'t need a full day. You need 3 intentional hours. Here\'s how to reset mind and body before the week begins.',au:'nour',likes:5500,views:'47.3K',time:'2d ago',h:200},
+  {id:10,title:'The Dewy Skin Makeup Look: Full Tutorial',cat:'Beauty',em:'💄',desc:'Forget matte — dewy skin is having its moment. Here\'s my exact routine for that natural, lit-from-within glow.',au:'layla',likes:6700,views:'58.1K',time:'3d ago',h:240},
+  {id:11,title:'Pomodoro Is Dead — Here\'s What Works for ADHD Women',cat:'Productivity',em:'⚡',desc:'The Pomodoro technique never worked for my brain. Here\'s the time-blocking system that actually sticks after 2 years.',au:'sofia',likes:4800,views:'40.5K',time:'3d ago',h:210},
+  {id:12,title:'Dressing Modestly in Summer: 15 Looks I\'m Living In',cat:'Modest Fashion',em:'🌺',desc:'Hot weather doesn\'t have to mean showing more skin. These 15 outfits prove you can be modest, stylish, and cool.',au:'amara',likes:7800,views:'68.4K',time:'4d ago',h:270},
+  {id:13,title:'Why I Quit My 6-Figure Job to Start My Own Business',cat:'Careers',em:'🚀',desc:'Everyone thought I was crazy. 18 months later, I\'m happier and earning more. The honest story.',au:'priya',likes:9200,views:'81.7K',time:'5d ago',h:200},
+  {id:14,title:'The Journaling Practice That Rewired My Anxious Brain',cat:'Self-Care',em:'📓',desc:'I used to wake up at 3am with racing thoughts. This 10-minute night journaling practice changed my sleep forever.',au:'zara',likes:8100,views:'72.3K',time:'5d ago',h:220},
+  {id:15,title:'100 Days of Consistent Skincare: My Journey',cat:'Beauty',em:'🌟',desc:'Same products, same routine, no shortcuts — 100 days. What happened to my skin genuinely surprised me.',au:'layla',likes:12400,views:'118K',time:'1w ago',h:250},
+  {id:16,title:'Active Recall: Study Half the Time, Remember Twice as Much',cat:'Study Tips',em:'🧠',desc:'Research shows active recall is 3x more effective than re-reading. Here\'s the exact method I use before every exam.',au:'sofia',likes:7300,views:'62.8K',time:'1w ago',h:200},
+  {id:17,title:'Herbs That Actually Helped My Hormones',cat:'Wellness',em:'🌿',desc:'Three years with an integrative doctor on my hormonal imbalances. These five herbs made a real difference.',au:'nour',likes:6100,views:'53.4K',time:'1w ago',h:220},
+  {id:18,title:'5 Abaya Styling Tricks No One Talks About',cat:'Modest Fashion',em:'🌸',desc:'The abaya is endlessly versatile. These tricks will completely change how you see yours.',au:'amara',likes:8900,views:'79.2K',time:'1w ago',h:260},
+  {id:19,title:'How I Built a Network of 200 Women in 6 Months',cat:'Careers',em:'🤝',desc:'Networking felt transactional until I found a way to do it that felt natural, generous, and actually fun.',au:'priya',likes:5400,views:'46.1K',time:'2w ago',h:210},
+  {id:20,title:'The Productivity System for Creative Women',cat:'Productivity',em:'✨',desc:'GTD never clicked for my creative brain. This analog system with pen and paper transformed how I work.',au:'zara',likes:4700,views:'40.7K',time:'2w ago',h:190},
+  {id:21,title:'28-Day Glow Challenge: Skin, Sleep & Stress',cat:'Self-Care',em:'💆',desc:'I designed this challenge to address the three biggest things affecting how your skin looks and how you feel.',au:'nour',likes:9800,views:'88.4K',time:'2w ago',h:230},
+  {id:22,title:'Solo Travel to Japan: A Woman\'s Complete Guide',cat:'Travel',em:'🗾',desc:'Japan is one of the safest countries for solo female travelers. Here\'s everything I wish I\'d known before my 2-week trip.',au:'chloe',likes:7600,views:'66.9K',time:'3w ago',h:250},
+  {id:23,title:'Setting Boundaries With Family Without Guilt',cat:'Relationships',em:'🤍',desc:'Boundaries with family feel different. Here\'s the compassionate approach that helped me protect my peace.',au:'zara',likes:10200,views:'91.3K',time:'3w ago',h:220},
+  {id:24,title:'My Minimalist Beauty Shelf: Just 8 Products',cat:'Beauty',em:'🧴',desc:'I owned 200+ beauty products. Decluttering to 8 made my routine faster, more intentional — and my skin looks better.',au:'layla',likes:5900,views:'51.6K',time:'3w ago',h:240},
+];
+const DISCUSSIONS = [
+  {ico:'💬',title:'How do you stay consistent when motivation disappears?',prev:'I\'ve started and stopped so many routines. What\'s your strategy when you just don\'t feel like it?',replies:284,likes:1420,time:'3h ago'},
+  {ico:'🌸',title:'Building an abaya wardrobe on a budget — recommendations?',prev:'I want to dress more modestly but quality abayas are expensive. Any tips or brands you love?',replies:156,likes:840,time:'5h ago'},
+  {ico:'📚',title:'Medical school or law school — how did you decide?',prev:'Torn between two paths I love. Would love to hear from women in both fields.',replies:203,likes:1100,time:'8h ago'},
+  {ico:'✨',title:'Self-love practices that actually helped you heal',prev:'Not just bath bombs. What ACTUALLY helped you learn to like yourself again after a hard period?',replies:412,likes:2800,time:'1d ago'},
+  {ico:'💼',title:'Being taken seriously at work as a young woman',prev:'I keep getting interrupted in meetings. My ideas get credited to others. Strategies that work?',replies:347,likes:2300,time:'2d ago'},
+];
+const ARTICLES = [
+  {tag:'Wellness',title:'The Science of Why Women Need More Sleep',desc:'New research reveals women\'s brains work differently during sleep — and most of us aren\'t getting enough.',rt:'7 min',au:'nour',em:'😴'},
+  {tag:'Careers',title:'How 12 Women Built 6-Figure Businesses From Their Phones',desc:'From Instagram boutiques to online coaching — these women prove it can start exactly where you are.',rt:'9 min',au:'priya',em:'📱'},
+  {tag:'Personal Growth',title:'The Quiet Confidence of Women Who Don\'t Need to Prove Themselves',desc:'There\'s a certain peace that comes when you stop trying to demonstrate your worth.',rt:'5 min',au:'zara',em:'🌷'},
+  {tag:'Beauty',title:'Skincare Ingredients Dermatologists Actually Use on Themselves',desc:'We surveyed 30 female dermatologists about their personal routines. Surprisingly simple answers.',rt:'6 min',au:'layla',em:'🧴'},
+  {tag:'Study Tips',title:'8 Habits of Students Who Never Cram',desc:'Students who never stress before exams stopped studying the way school taught them.',rt:'8 min',au:'sofia',em:'📖'},
+  {tag:'Modest Fashion',title:'The Rise of Modest Fashion as a Global Movement',desc:'From Paris runways to Jakarta boutiques — one of the fastest-growing sectors in apparel.',rt:'11 min',au:'amara',em:'🌍'},
+];
+const VIDEOS = [
+  {title:'How I Build My Weekly Schedule as a Law Student',cr:'sofia',views:'124K',dur:'18:32',em:'📅'},
+  {title:'My Full Skincare Routine: Morning & Night',cr:'layla',views:'281K',dur:'24:17',em:'✨'},
+  {title:'Abaya Lookbook: 10 Ways to Style One Piece',cr:'amara',views:'198K',dur:'15:44',em:'🌸'},
+  {title:'Guided Morning Meditation for Anxious Women',cr:'nour',views:'89K',dur:'10:00',em:'🧘'},
+  {title:'How I Got My First Tech Job Without a CS Degree',cr:'priya',views:'156K',dur:'22:08',em:'💻'},
+  {title:'My Inner Child Healing Journey (Very Honest)',cr:'zara',views:'204K',dur:'31:55',em:'🌷'},
+  {title:'A Week in My Life: Business & Motherhood',cr:'fatima',views:'97K',dur:'19:22',em:'🏠'},
+  {title:'Solo Female Travel Safety Tips That Actually Work',cr:'chloe',views:'173K',dur:'20:41',em:'✈️'},
+];
+const SPOTLIGHTS = [
+  {q:'I built my business during naptime, between midnight feeds, on weekends when everyone thought I was resting. Now it supports our whole family.',name:'Mariam K.',role:'Mom & Founder',av:'av1'},
+  {q:'Being the only woman of color in the room felt isolating. Now I see it as a superpower — I bring perspective they can\'t afford to ignore.',name:'Adaeze O.',role:'Finance Director',av:'av4'},
+  {q:'I failed my first startup. Then my second. The third cleared a million in revenue. The only difference was I didn\'t stop.',name:'Sana A.',role:'Serial Entrepreneur',av:'av3'},
+  {q:'Learning to dress modestly felt like finding myself. Every layer was an act of reclaiming who I am — on my own terms.',name:'Hana M.',role:'Fashion Creator',av:'av5'},
+];
+const TOPICS = [
+  {em:'✨',name:'#GlowUp',ct:'18.2K',hot:true},{em:'📚',name:'#StudyWithMe',ct:'12.4K',hot:false},
+  {em:'🌸',name:'#ModestFashion',ct:'9.8K',hot:true},{em:'🌿',name:'#WellnessJourney',ct:'8.1K',hot:false},
+  {em:'💼',name:'#WomenInBusiness',ct:'6.5K',hot:false},{em:'☕',name:'#MorningRoutine',ct:'5.9K',hot:false},
+  {em:'🌺',name:'#SelfLove',ct:'5.3K',hot:false},{em:'📖',name:'#BookClub',ct:'4.2K',hot:false},
+  {em:'🎯',name:'#GoalSetting',ct:'2.9K',hot:false},
+];
+const CATS = [
+  {name:'Beauty',em:'💄',ct:'8.4K',bg:'#FDF0F3'},{name:'Fashion',em:'👗',ct:'6.2K',bg:'#F5EEF8'},
+  {name:'Modest Fashion',em:'🌸',ct:'5.1K',bg:'#FDF5F0'},{name:'Education',em:'🎓',ct:'4.8K',bg:'#F0F5FD'},
+  {name:'Study Tips',em:'📚',ct:'4.3K',bg:'#F0FDF4'},{name:'Careers',em:'💼',ct:'3.9K',bg:'#FFFDF0'},
+  {name:'Productivity',em:'⚡',ct:'3.5K',bg:'#FFF8F0'},{name:'Lifestyle',em:'🌷',ct:'7.1K',bg:'#FDF0F5'},
+  {name:'Health & Wellness',em:'🌿',ct:'6.6K',bg:'#F0FDF8'},{name:'Self-Care',em:'🛁',ct:'5.4K',bg:'#FDF0F0'},
+  {name:'Personal Growth',em:'🌱',ct:'4.7K',bg:'#F5FDF0'},{name:'Relationships',em:'🤝',ct:'3.2K',bg:'#F0F0FD'},
+  {name:'Cooking',em:'🍳',ct:'2.8K',bg:'#FDF8F0'},{name:'Travel',em:'✈️',ct:'2.4K',bg:'#F0FDFD'},
+  {name:'Women in Business',em:'🚀',ct:'3.6K',bg:'#FDF0F8'},{name:"Women's Stories",em:'📖',ct:'2.1K',bg:'#F8F0FD'},
+];
+const SAMPLE_CMS = [
+  {name:'Layla H.',txt:'This is everything I needed today! Saving immediately 🌸',av:'av1'},
+  {name:'Sofia R.',txt:'The detail in this post is incredible. Thank you!',av:'av2'},
+  {name:'Nour A.',txt:'I tried this and it genuinely worked. Couldn\'t believe it.',av:'av3'},
+  {name:'Amara O.',txt:'You are so inspiring honestly ✨',av:'av4'},
+  {name:'Priya S.',txt:'Bookmarked for my sister too — she NEEDS this.',av:'av5'},
+];
+
+// ── HELPERS ───────────────────────────────────────────────────────────────
+const fmt = n => n >= 1000 ? (n/1000).toFixed(1)+'K' : String(n);
+const user = id => USERS.find(u => u.id === id) || USERS[0];
+const miniAva = (u, s=24) =>
+  `<div class="mini-ava ${u.av}" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.42)}px">${u.init}</div>`;
+
+// ── RENDER HELPERS ────────────────────────────────────────────────────────
+function postCard(p) {
+  const u = user(p.au);
+  return `<div class="card" data-pid="${p.id}">
+    <div class="card-img" style="height:${p.h}px;font-size:3rem">${p.em}</div>
+    <div class="card-body">
+      <div class="card-cat">${p.cat}</div>
+      <div class="card-title">${p.title}</div>
+      <div class="card-desc">${p.desc.slice(0,88)}…</div>
+      <div class="card-author">
+        ${miniAva(u)} <span style="font-size:12px;font-weight:500;color:var(--soft)">${u.name}</span>
+        <span style="font-size:10px;color:var(--muted);margin-left:auto">${p.time}</span>
+      </div>
+      <div class="card-acts">
+        <button class="act like-act" data-pid="${p.id}">❤️ ${fmt(p.likes)}</button>
+        <button class="act open-act" data-pid="${p.id}">💬</button>
+        <button class="act save-act">🔖</button>
+        <button class="act share-act">↗</button>
+        <span class="vc">👁 ${p.views}</span>
+      </div>
+    </div>
+  </div>`;
+}
+function creatorCard(u) {
+  return `<div class="cr-card" data-uid="${u.id}">
+    <div class="cr-ava ${u.av}">${u.init}</div>
+    <div class="cr-name">${u.name}</div>
+    <div class="cr-handle">${u.handle}</div>
+    <div class="cr-niche">${u.niche}</div>
+    <div class="cr-fol">${u.followers} followers</div>
+    <button class="btn-fol follow-btn">+ Follow</button>
+  </div>`;
+}
+function artCard(a) {
+  const u = user(a.au);
+  return `<div class="art-card">
+    <div class="art-img">${a.em}</div>
+    <div class="art-body">
+      <div class="art-tag">${a.tag}</div>
+      <div class="art-title">${a.title}</div>
+      <div class="art-desc">${a.desc.slice(0,90)}…</div>
+      <div class="art-meta">${miniAva(u,20)}<span>${u.name}</span><span>·</span><span>${a.rt} read</span></div>
+    </div>
+  </div>`;
+}
+function vidCard(v) {
+  const u = user(v.cr);
+  return `<div class="vid-card">
+    <div class="vid-thumb">${v.em}<div class="play">▶</div><div class="dur">${v.dur}</div></div>
+    <div class="vid-body">
+      <div class="vid-title">${v.title}</div>
+      <div class="vid-meta">${u.name} · ${v.views} views</div>
+    </div>
+  </div>`;
+}
+function spotCard(s) {
+  return `<div class="spot-card">
+    <div class="spot-q">"${s.q}"</div>
+    <div class="spot-auth"><div class="spot-ava ${s.av}">${s.name[0]}</div>
+      <div><div class="spot-name">${s.name}</div><div class="spot-role">${s.role}</div></div></div>
+  </div>`;
+}
+
+// ── PAGE SYSTEM ───────────────────────────────────────────────────────────
+const allPages = ['home','categories','catdetail','videos','articles','saved','search','profile'];
+function showPg(id) {
+  allPages.forEach(p => {
+    const el = document.getElementById('pg-'+p);
+    if(el) el.classList.toggle('on', p === id);
+  });
+  window.scrollTo(0,0);
+}
+
+// ── INIT RENDER ───────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('topicsEl').innerHTML =
+    TOPICS.map(t => `<div class="chip${t.hot?' hot':''}">
+      <span>${t.em}</span><span class="chip-n">${t.name}</span><span class="chip-c">${t.ct}</span>
+    </div>`).join('');
+
+  document.getElementById('creatorsEl').innerHTML = USERS.map(creatorCard).join('');
+  document.getElementById('mainFeed').innerHTML = POSTS.map(postCard).join('');
+  document.getElementById('discEl').innerHTML = DISCUSSIONS.map(d =>
+    `<div class="disc">
+      <div class="disc-ico">${d.ico}</div>
+      <div><div class="disc-title">${d.title}</div>
+        <div class="disc-prev">${d.prev}</div>
+        <div class="disc-meta"><span>💬 ${d.replies}</span><span>❤️ ${d.likes.toLocaleString()}</span><span>${d.time}</span></div>
+      </div></div>`).join('');
+
+  const ah = ARTICLES.map(artCard).join('');
+  document.getElementById('articlesEl').innerHTML = ah;
+  document.getElementById('allArtsEl').innerHTML = ah + ah;
+
+  const vh = VIDEOS.slice(0,4).map(vidCard).join('');
+  document.getElementById('videosEl').innerHTML = vh;
+  document.getElementById('allVidsEl').innerHTML = VIDEOS.map(vidCard).join('');
+
+  document.getElementById('spotEl').innerHTML = SPOTLIGHTS.map(spotCard).join('');
+
+  document.getElementById('catGridEl').innerHTML = CATS.map(c =>
+    `<div class="cat-box" style="background:${c.bg}" data-cat="${c.name}">
+      <div class="cat-ico">${c.em}</div><div class="cat-nm">${c.name}</div><div class="cat-ct">${c.ct} posts</div>
+    </div>`).join('');
+
+  document.getElementById('searchFeedEl').innerHTML = POSTS.map(postCard).join('');
+  document.getElementById('savedFeedEl').innerHTML = POSTS.slice(0,8).map(postCard).join('');
+}
+
+// ── PROFILE ───────────────────────────────────────────────────────────────
+let profFollowing = false;
+function openProfile(id) {
+  const u = user(id);
+  const cols = {av1:'#C9849A',av2:'#A08AC0',av3:'#8CAA84',av4:'#A88AAA',av5:'#D49A78',av6:'#6AA898'};
+  const c = cols[u.av]||'#C9849A';
+  document.getElementById('profBanner').style.background =
+    `linear-gradient(135deg,${c}44,${c}22 50%,#EDE4D855)`;
+  document.getElementById('profAva').innerHTML =
+    `<div class="prof-ava ${u.av}">${u.init}</div>`;
+  document.getElementById('profName').textContent = u.name;
+  document.getElementById('profHandle').textContent = u.handle + ' · ' + u.niche;
+  document.getElementById('profBio').textContent = u.bio;
+  document.getElementById('profStats').innerHTML =
+    `<div><div class="ps-n">${u.posts}</div><div class="ps-l">Posts</div></div>
+     <div><div class="ps-n">${u.followers}</div><div class="ps-l">Followers</div></div>
+     <div><div class="ps-n">${u.following.toLocaleString()}</div><div class="ps-l">Following</div></div>
+     <div><div class="ps-n">${u.joined}</div><div class="ps-l">Joined</div></div>`;
+  profFollowing = false;
+  document.getElementById('profFollowBtn').textContent = 'Follow';
+  document.getElementById('profFollowBtn').style.cssText = '';
+  const ups = POSTS.filter(p => p.au === id);
+  document.getElementById('profFeedEl').innerHTML =
+    (ups.length ? ups : POSTS.slice(0,8)).map(postCard).join('') +
+    POSTS.slice(0,4).map(postCard).join('');
+  showPg('profile');
+}
+
+// ── POST MODAL ────────────────────────────────────────────────────────────
+let curPost = null, modalLiked = false;
+function openPost(id) {
+  curPost = POSTS.find(p => p.id === id);
+  if (!curPost) return;
+  const u = user(curPost.au);
+  modalLiked = false;
+  document.getElementById('mCat').innerHTML =
+    `<span style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--rose)">${curPost.cat}</span>`;
+  document.getElementById('mImg').textContent = curPost.em;
+  document.getElementById('mTitle').textContent = curPost.title;
+  document.getElementById('mDesc').textContent = curPost.desc;
+  const ava = document.getElementById('mAva');
+  ava.className = 'cm-ava ' + u.av;
+  ava.textContent = u.init;
+  document.getElementById('mAuthor').textContent = u.name + ' · ' + u.handle;
+  document.getElementById('mTime').textContent = curPost.time + ' · ' + curPost.views + ' views';
+  document.getElementById('mLikeCt').textContent = fmt(curPost.likes);
+  document.getElementById('modalLikeBtn').classList.remove('on');
+  document.getElementById('cmTitle').textContent = SAMPLE_CMS.length + ' Comments';
+  document.getElementById('cmList').innerHTML = SAMPLE_CMS.map(c =>
+    `<div class="cm-row">
+      <div class="cm-ava ${c.av}">${c.name[0]}</div>
+      <div><div class="cm-nm">${c.name}</div><div class="cm-txt">${c.txt}</div></div>
+    </div>`).join('');
+  document.getElementById('cmInput').value = '';
+  document.getElementById('postOverlay').classList.remove('hide');
+  document.body.style.overflow = 'hidden';
+}
+function closePost() {
+  document.getElementById('postOverlay').classList.add('hide');
+  document.body.style.overflow = '';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  const [ico, ...rest] = msg.split(' ');
+  document.getElementById('toastIco').textContent = ico;
+  document.getElementById('toastTxt').textContent = rest.join(' ');
+  const el = document.getElementById('toast');
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
+function doSearch(q) {
+  if (!q.trim()) return;
+  showPg('search');
+  document.getElementById('searchHead').innerHTML =
+    `Results for "<em style="color:var(--rose)">${q}</em>"`;
+  const r = POSTS.filter(p =>
+    p.title.toLowerCase().includes(q.toLowerCase()) ||
+    p.cat.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('searchFeedEl').innerHTML =
+    (r.length ? r : POSTS).map(postCard).join('');
+}
+
+// ── EVENT WIRING ──────────────────────────────────────────────────────────
+function wire() {
+  // Nav
+  document.getElementById('logoBtn').addEventListener('click', () => {
+    showPg('home');
+    document.querySelectorAll('.catbtn').forEach((b,i) => b.classList.toggle('on', i===0));
+  });
+  document.getElementById('notifBtn').addEventListener('click', () => toast('🔔 3 new notifications'));
+  document.getElementById('msgBtn').addEventListener('click', () => toast('💬 You have 1 new message'));
+  document.getElementById('savedNavBtn').addEventListener('click', () => showPg('saved'));
+  document.getElementById('myAvaBtn').addEventListener('click', () => openProfile('layla'));
+  document.getElementById('createBtn').addEventListener('click', () => {
+    document.getElementById('createOverlay').classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Hero buttons
+  document.getElementById('exploreBtn').addEventListener('click', () => showPg('categories'));
+  document.getElementById('shareBtn').addEventListener('click', () => {
+    document.getElementById('createOverlay').classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Category bar
+  document.querySelectorAll('.catbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.catbtn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const pg = btn.dataset.pg;
+      const cat = btn.dataset.cat;
+      if (pg === 'home') showPg('home');
+      else if (pg === 'videos') showPg('videos');
+      else if (pg === 'articles') showPg('articles');
+      else if (pg === 'categories') showPg('categories');
+      else if (cat) openCat(cat);
+    });
+  });
+
+  // Home page buttons
+  document.getElementById('allCreatorsBtn').addEventListener('click', () => showPg('search'));
+  document.getElementById('allArticlesBtn').addEventListener('click', () => showPg('articles'));
+  document.getElementById('allVideosBtn').addEventListener('click', () => showPg('videos'));
+
+  // Back buttons
+  document.getElementById('catBackBtn').addEventListener('click', () => showPg('categories'));
+  document.getElementById('profBackBtn').addEventListener('click', () => showPg('home'));
+
+  // Profile follow
+  document.getElementById('profFollowBtn').addEventListener('click', function() {
+    profFollowing = !profFollowing;
+    this.textContent = profFollowing ? 'Following' : 'Follow';
+    this.style.background = profFollowing ? 'var(--rose)' : '';
+    this.style.color = profFollowing ? '#fff' : '';
+    toast(profFollowing ? '🌸 Now following!' : '💔 Unfollowed');
+  });
+  document.getElementById('profMsgBtn').addEventListener('click', () => toast('💬 Opening messages…'));
+
+  // Profile tabs
+  document.querySelectorAll('.ptab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.ptab').forEach(b => b.classList.remove('on'));
+      this.classList.add('on');
+      toast('📂 Loading ' + this.textContent + '…');
+    });
+  });
+
+  // Post modal buttons
+  document.getElementById('closePostBtn').addEventListener('click', closePost);
+  document.getElementById('postOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('postOverlay')) closePost();
+  });
+  document.getElementById('modalLikeBtn').addEventListener('click', function() {
+    modalLiked = !modalLiked;
+    this.classList.toggle('on', modalLiked);
+    if (curPost) {
+      curPost.likes += modalLiked ? 1 : -1;
+      document.getElementById('mLikeCt').textContent = fmt(curPost.likes);
+    }
+    toast(modalLiked ? '❤️ Post liked!' : '💔 Like removed');
+  });
+  document.getElementById('modalSaveBtn').addEventListener('click', () => toast('🔖 Saved to your collection!'));
+  document.getElementById('modalShareBtn').addEventListener('click', () => toast('📤 Link copied!'));
+  document.getElementById('modalReportBtn').addEventListener('click', () => toast('⚠️ Report submitted. Thank you.'));
+  document.getElementById('cmSendBtn').addEventListener('click', () => {
+    const inp = document.getElementById('cmInput');
+    if (!inp.value.trim()) { toast('✏️ Write a comment first'); return; }
+    const div = document.createElement('div');
+    div.className = 'cm-row';
+    div.innerHTML = `<div class="cm-ava av1">L</div><div><div class="cm-nm">You</div><div class="cm-txt">${inp.value}</div></div>`;
+    document.getElementById('cmList').appendChild(div);
+    inp.value = '';
+    toast('💬 Comment posted!');
+  });
+
+  // Create modal
+  document.getElementById('closeCreateBtn').addEventListener('click', closeCreate);
+  document.getElementById('cancelCreateBtn').addEventListener('click', closeCreate);
+  document.getElementById('createOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('createOverlay')) closeCreate();
+  });
+  document.getElementById('publishBtn').addEventListener('click', () => {
+    closeCreate();
+    toast('✨ Your post is live on HERIYA!');
+  });
+  document.getElementById('uploadZone').addEventListener('click', () => toast('📁 File picker ready'));
+  document.querySelectorAll('.cr-tab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.cr-tab').forEach(b => b.classList.remove('on'));
+      this.classList.add('on');
+    });
+  });
+
+  // New collection
+  document.getElementById('newCollBtn').addEventListener('click', () => toast('✨ New collection created!'));
+
+  // Collection items
+  document.querySelectorAll('.coll-it').forEach(it => {
+    it.addEventListener('click', function() {
+      document.querySelectorAll('.coll-it').forEach(i => i.classList.remove('on'));
+      this.classList.add('on');
+    });
+  });
+
+  // Search input
+  document.getElementById('searchInput').addEventListener('input', function() {
+    if (this.value.length > 1) doSearch(this.value);
+  });
+
+  // Delegated clicks (posts, creators, categories, topics, discussions, videos, articles, spotlight)
+  document.body.addEventListener('click', function(e) {
+    // Post card → open modal
+    const card = e.target.closest('.card');
+    if (card && !e.target.closest('.card-acts')) {
+      openPost(Number(card.dataset.pid));
+      return;
+    }
+    // Like on card
+    const likeAct = e.target.closest('.like-act');
+    if (likeAct) {
+      likeAct.classList.toggle('liked');
+      toast(likeAct.classList.contains('liked') ? '❤️ Post liked!' : '💔 Like removed');
+      return;
+    }
+    // Comment btn on card → open modal
+    const openAct = e.target.closest('.open-act');
+    if (openAct) { openPost(Number(openAct.dataset.pid)); return; }
+    // Save on card
+    if (e.target.closest('.save-act')) { toast('🔖 Saved to your collection!'); return; }
+    // Share on card
+    if (e.target.closest('.share-act')) { toast('📤 Link copied!'); return; }
+    // Creator card
+    const crCard = e.target.closest('.cr-card');
+    if (crCard && !e.target.closest('.follow-btn')) {
+      openProfile(crCard.dataset.uid);
+      return;
+    }
+    // Follow button
+    const fBtn = e.target.closest('.follow-btn');
+    if (fBtn) {
+      const on = fBtn.classList.toggle('on');
+      fBtn.textContent = on ? 'Following' : '+ Follow';
+      toast(on ? '🌸 Followed!' : '💔 Unfollowed');
+      return;
+    }
+    // Cat box in categories page
+    const catBox = e.target.closest('.cat-box');
+    if (catBox) { openCat(catBox.dataset.cat); return; }
+    // Discussion card → toast
+    if (e.target.closest('.disc')) { toast('💬 Opening discussion…'); return; }
+    // Article card → toast
+    if (e.target.closest('.art-card')) { toast('📰 Opening article…'); return; }
+    // Video card → toast
+    if (e.target.closest('.vid-card')) { toast('🎬 Opening video…'); return; }
+    // Spotlight → toast
+    if (e.target.closest('.spot-card')) { toast('🌟 Opening spotlight…'); return; }
+    // Topic chip
+    if (e.target.closest('.chip')) {
+      const n = e.target.closest('.chip').querySelector('.chip-n').textContent;
+      toast('🔍 Loading ' + n + ' posts…');
+      return;
+    }
+  });
+}
+
+function closeCreate() {
+  document.getElementById('createOverlay').classList.add('hide');
+  document.body.style.overflow = '';
+}
+
+function openCat(name) {
+  document.getElementById('catDetailTitle').innerHTML = name + ' <span>Posts</span>';
+  const f = POSTS.filter(p => p.cat === name);
+  document.getElementById('catDetailFeed').innerHTML =
+    (f.length ? f : POSTS.slice(0,12)).map(postCard).join('');
+  showPg('catdetail');
+}
+
+// ── START ─────────────────────────────────────────────────────────────────
+init();
+wire();
+</script>
+</body>
+</html>
